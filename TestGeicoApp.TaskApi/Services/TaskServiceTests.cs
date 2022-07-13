@@ -3,9 +3,6 @@ using GeicoApp.Models;
 using GeicoApp.Services;
 using GeicoApp.TaskApi.Exceptions;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace TestGeicoApp.TaskApi.Services
 {
