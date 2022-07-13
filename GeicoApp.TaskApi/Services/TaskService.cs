@@ -74,7 +74,7 @@ namespace GeicoApp.Services
                 .GroupBy(x => x.DueDate)
                 .Select(group => group.Count()).OrderByDescending(x=>x).Take(1);
 
-            if (result.FirstOrDefault() == null)
+            if (result?.FirstOrDefault() == null)
             {
                 return true;
             }
