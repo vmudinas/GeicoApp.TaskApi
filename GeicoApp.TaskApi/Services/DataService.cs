@@ -2,6 +2,7 @@
 using GeicoApp.Data;
 using GeicoApp.Data.Entities;
 using GeicoApp.Models;
+using GeicoApp.TaskApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeicoApp.Services
@@ -38,8 +39,16 @@ namespace GeicoApp.Services
 
         public async Task UpdateTask(TaskModel updateTask)
         {
-            _context.Tasks.Update(_mapper.Map<GTask>(updateTask));
-            await _context.SaveChangesAsync();
+            var dbTask = _mapper.Map<GTask>(updateTask);
+            if (_context.Tasks.Any(x => x.Id == dbTask.Id))
+            {
+                _context.Tasks.Update(_mapper.Map<GTask>(updateTask));
+                await _context.SaveChangesAsync();
+            }
+            else 
+            {
+                throw new InvalidTaskException($"Task with id: {dbTask.Id} cannot be updated, as that id does not exist in the database.");
+            }    
         }
     }
 }
